@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="utily.Connections"%>
+<%@page import="java.sql.*"%>
 <%@page import="userbean.Registration"%>
 <html lang="en">
 
@@ -8,13 +10,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>EXECUTIVE EDIT PROFILE</title>
+  <title>EMPLOYEE ADD TICKET</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <style>
+img {
+  border-radius: 50%;
+}
+#button1 {border-radius: 50px; 
+background-color: black;
+border: none;
+    color: white;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    
+    
+    cursor: pointer;
+}
+#z{
+font-variant: small-caps;
+font-style:Italic;
+
+} 
+.btn-default{
+background-color: light;
+}
+</style>
   <style>
   .page-header{
   margin-top: 20px;
@@ -57,7 +84,7 @@ font-variant: small-caps;
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <h2 ><p class="small" style="color:red;">Ticket and Test Management</p></h2>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -71,7 +98,13 @@ font-variant: small-caps;
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="executiveEditProfile.jsp">
+          <a class="nav-link" href="employeeHome.jsp">
+            <i class="fa fa-home"></i>
+            <span class="nav-link-text">Home</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="employeeEditProfile.jsp">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Edit Profile</span>
           </a>
@@ -84,13 +117,13 @@ font-variant: small-caps;
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="executiveAddTicket.jsp">Add Ticket</a>
+              <a href="employeeAddTicket.jsp">Add Ticket</a>
             </li>
             <li>
-              <a href="executiveEditTicket.jsp">Edit Ticket</a>
+              <a href="empEditTicket.jsp">Edit Ticket</a>
             </li>
 			<li>
-              <a href="executiveViewTickets.jsp">View Tickets</a>
+              <a href="employeeViewTickets.jsp">View Tickets</a>
             </li>
           </ul>
         </li>
@@ -162,13 +195,39 @@ font-variant: small-caps;
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
+             <li class="">
+		
+                <img src="images/img.jpg" alt="avatar" style="width: 50px"><!-- <font color=red size=5px>John Doe</font> -->
+                                    
+		</li> 
+		<li>
+		<div class="container">
+    <div class="dropdown">
+        <%try {
+                	Connection con=Connections.getUrl();
+        PreparedStatement ps = con.prepareStatement("select * from registration where username=?");
+        ps.setString(1,u.getUsername());
+        ResultSet rs = ps.executeQuery();
+       
+        while ( rs.next()) { %>
+                <button id="button1"  type="button" data-toggle="dropdown"><img width='50' height='50' src=displayphoto?id=<%=rs.getString("username")%> alt="avatar" style="width: 50px">
+                  </button><font id="z" color=red size=5px><%=u.getName() %></font>
+                  <ul class="dropdown-menu">
+            <center><li><a href="login.jsp"><button class="btn btn-info">Log Out</button></a></li></center>
+            
+        </ul>
         
-        
-        
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
+        <% }
+
+        con.close();
+    }
+    catch(Exception ex) {
+ex.printStackTrace();
+    } %>
+    </div>
+</div>
+		</li>
+		
       </ul>
     </div>
   </nav>
@@ -177,7 +236,7 @@ font-variant: small-caps;
       <!-- Breadcrumbs-->
       <center><div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Edit Profile</h1>
+                    <h1 class="page-header"><b>Add Ticket</b></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div></center>
@@ -185,70 +244,57 @@ font-variant: small-caps;
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Edit Basic Information
+                            Ticket Information
                         </div>
                         <div class="panel-body" >
                             <div class="row" >
                                 <div class="col-lg-12" >
                                     <form role="form">
                                         <div class="form-group">
-                                            <b><label>Name</label></b>
-                                            <input class="form-control" type="text" name="name" pattern="[A-Za-z]{8,16}" placeholder="Your Name">
+                                            <b><label>Ticket Id</label></b>
+                                            <input class="form-control" type="text" name="ticketid" placeholder="Generates Automatically">
                                         </div>
                                         <div class="form-group">
-                                            <b><label>Emp Id</label></b>
-                                            <input class="form-control" type="text" name="empid" pattern="[0-9]{4}" placeholder="Employee Id">
+                                            <b><label>Ticket Description</label></b>
+                                            <input class="form-control" type="text" name="description" pattern="[A-Za-z]" placeholder="Ticket Description">
                                         </div>
                                         <div class="form-group">
-                                            <b><label>Designation *</label></b>
-                                            <select class="form-control" required>
-                                                <option disabled selected>Select Designation</option>
-												<option>Software Trainee</option>
-                                                <option>Software Developer</option>
-                                                <option>Quality Analyst</option>
-                                                <option>Executive Software Developer</option>
-                                                <option>Executive Quality Analyst</option>
-												<option>HR-Department</option>
-												
-                                            </select></div>
-										<div class="form-group">
-                                            <b><label>Email</label></b>
-                                            <input class="form-control" type="Email" name="email" pattern="[a-z0-9._%+-]+@[gmail,yahoo,outlook]+\.[a-z]{2,3}$"  placeholder="Email">
+                                            <b><label>Project Name</label></b>
+                                            <input class="form-control" type="text" name="project" pattern="[A-Za-z]" placeholder="Project Name">
                                         </div>
 										<div class="form-group">
-                                            <b><label>Mobile No</label></b>
-                                            <input class="form-control" type="text" name="mobileno" pattern="[7-9]{1}[0-9]{9}" placeholder="Mobile No">
+                                           <b> <label>Module Name</label></b>
+                                            <input class="form-control" type="text" name="module" pattern="[A-Za-z]" placeholder="Module Nmae">
                                         </div>
 										<div class="form-group">
-                                             <b><label>Domain *</label></b>
-                                            <select class="form-control" required>
-                                                <option disabled selected>Select Domain</option>
-												<option>Testing</option>
-                                                <option>Java</option>
-                                                <option>.NET</option>
-                                                <option>HR</option>
-                                                
-                                            </select></div>
-										
-										<div class="form-group">
-                                            <b><label>Webmail</label></b>
-                                            <input class="form-control" type="Email" name="webmail" pattern="[a-z0-9._%+-]+@[A-Za-z]{3,5}+\.[a-z]{2,3}$" placeholder="Webmail">
+                                            <b><label>Requirement</label></b>
+                                            <input class="form-control" type="text" name="requirement" pattern="[A-Za-z]" placeholder="Requirement Nmae">
                                         </div>
 										<div class="form-group">
-                                            <b><label>Username</label></b>
-                                            <input class="form-control" type="text" name="username" pattern=".{6,}" placeholder="Username">
+                                            <b><label>Assigned to </label></b>
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
                                         </div>
 										<div class="form-group">
-                                            <b><label>Password</label></b>
-                                            <input class="form-control" type="text" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password">
+                                            <b><label>Assigned by</label></b>
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
                                         </div>
-										
-                                        <div class="form-group">
-                                            <b><label>Upload Image</label></b>
-                                            <br><input type="file">
+										<div class="form-group">
+                                            <b><label>Date of Issue</label></b>
+                                            <input class="form-control" type="date" name="doi" placeholder="Date of Issue">
                                         </div>
-                                        
-                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <br><button type="submit" class="btn btn-info">Add Ticket</button>
                                         
                                     </form><br>
                                 </div>

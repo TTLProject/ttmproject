@@ -16,44 +16,6 @@
   <link href="css/sb-admin.css" rel="stylesheet">
   
   <style>
-/* div.container-fluid{
-   
-    background: url('img/sample1.jpg') no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-	text-align: center;
-	padding-bottom: 150px;
-	padding-top: 10px;
-}
-.button {
-    background-color: #4CAF50; /* Green */
-/*    border: none;
-    color: white;
-    padding: 20px 64px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 8px 4px;
-    cursor: pointer;
-}
-div.c {
-    font-size: 250%;
-	font-style: italic;
-	padding-left:250px;
-}
-div.container-fluid{
- background-color:#808080;
-}
-div.z{
-padding-left: 450px;
-}
-div.y{
-padding-left: 200px;
-padding-top: 60px;
-} */
 
 * {
    margin: 0;
@@ -97,7 +59,7 @@ padding-top: 60px;
 	  <div class="centered"><b><h3>WELCOME</h3></b><br><b><h3>TO</h3></b><br><b><h3 style="color:red;">TICKET AND TEST MANAGEMENT</h3></b><br>
 	  </div>
 	  <div class="top-right">
-	  					<a href="registration.jsp" class="button"><button type="button" class="btn btn-info">SignUp</button></a>
+	  					<!-- <a href="registration.jsp" class="button"><button type="button" class="btn btn-info">SignUp</button></a> -->
 						<a href="login.jsp" class="button"><button type="button" class="btn btn-info">SignIn</button></a>
 						
 	  </div>

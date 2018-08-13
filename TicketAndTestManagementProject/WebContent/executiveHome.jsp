@@ -77,13 +77,15 @@ text-transform: uppercase;
     color: #4CAF50;
     text-decoration-line: underline; 
 }
-h2{
-padding-top:0px;
+h3{
+padding-top:35px;
 padding-left:50px;
 text-decoration-line: underline;
+font-size:20px;
 }
-blockquote{
+h4{
 padding-left:75px;
+font-size:15px;
 }
 
   </style>

@@ -4,14 +4,14 @@
     Author     : Aravind Sankaran
 --%>
 
+<%@page import="utily.Connections"%>
 <%@ page import="java.io.*,java.sql.*" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 
 <% 
                     String sn=request.getParameter("ver");
 
-Class.forName("oracle.jdbc.driver.OracleDriver");
-Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","srinivas","srinivas");
+					Connection con=Connections.getUrl();
                     Statement st=con.createStatement();
                     ResultSet rs = st.executeQuery("select * from registration where username='"+sn+"'");  // this is for name
                     if(rs.next())

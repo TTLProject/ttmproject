@@ -3,15 +3,15 @@ package dao;
 import java.sql.*;
 
 import userbean.Registration;
+import utily.Connections;
 
 public class Registrationdao {
 
 	public void register(Registration u) {
 		
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","srinivas","srinivas");
-			PreparedStatement pstmt=con.prepareStatement("insert into registration values(?,?,?,?,?,?,?,?,?,?)");
+			Connections.getUrl();
+			PreparedStatement pstmt=Connections.getUrl().prepareStatement("insert into registration values(?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1,u.getName());
 			pstmt.setString(2, u.getEmpid());
 			pstmt.setString(3, u.getDesignation());
@@ -22,6 +22,7 @@ public class Registrationdao {
 			pstmt.setString(8, u.getUsername());
 			pstmt.setString(9, u.getPassword());
 			pstmt.setString(10, u.getType());
+			pstmt.setString(11, "");
 			
 			
 			int i=pstmt.executeUpdate();

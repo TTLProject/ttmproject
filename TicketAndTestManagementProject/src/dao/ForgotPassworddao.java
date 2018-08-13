@@ -6,14 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import userbean.Registration;
+import utily.Connections;
 
 
 public class ForgotPassworddao {
 	public void register(Registration u) {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","srinivas","srinivas");
-			PreparedStatement pstmt=con.prepareStatement("select * from registration where username=? and email=?");
+			Connections.getUrl();
+			PreparedStatement pstmt=Connections.getUrl().prepareStatement("select * from registration where username=? and email=?");
 			pstmt.setString(1, u.getUsername());
 			pstmt.setString(2, u.getEmail());
 			

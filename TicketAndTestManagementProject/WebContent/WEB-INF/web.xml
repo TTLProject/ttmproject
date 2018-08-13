@@ -36,6 +36,22 @@
   <url-pattern>/ForgotPassword</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+        <servlet-name>AddPhoto</servlet-name>
+        <servlet-class>servlets.AddPhotoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddPhoto</servlet-name>
+        <url-pattern>/addphoto</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DisplayPhotoServlet</servlet-name>
+        <servlet-class>servlets.DisplayPhotoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayPhotoServlet</servlet-name>
+        <url-pattern>/displayphoto</url-pattern>
+    </servlet-mapping>
   <!-- SMTP settings -->
   <context-param>
 		<param-name>host</param-name>
