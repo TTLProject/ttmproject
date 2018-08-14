@@ -49,7 +49,7 @@ public class AddPhotoServlet extends HttpServlet {
             try {
             	Connections.getUrl();
             	Connections.getUrl().setAutoCommit(false);
-            String sql="update registration set name=? , empid=? , designation=? , email=? , mobile=? , domain=? , webmail=? , password=? , type=? , photo=? where username=?";
+            String sql="update registration set name=? , empid=? , designation=? , email=? , mobile=? , domain=? , webmail=? , password=? , gender=? , photo=? where username=?";
             PreparedStatement ps = Connections.getUrl().prepareStatement(sql);
             System.out.println("error");
             ps.setString(1, n);

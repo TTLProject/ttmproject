@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<%@page import="utily.Connections"%>
-<%@page import="java.sql.*"%>
-<%@page import="userbean.Registration"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <html lang="en">
 
 <head>
@@ -10,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>EXECUTIVE ADD TICKET</title>
+  <title>EXICUTIVE ADD TICKET</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -53,26 +54,6 @@
 p.small{
 font-variant: small-caps;
 }
-img {
-  border-radius: 50%;
-}
-#button1 {border-radius: 50px; 
-background-color: black;
-border: none;
-    color: white;
-    padding: 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    
-    
-    cursor: pointer;
-}
-#z{
-font-variant: small-caps;
-font-style:Italic;
-
-} 
   </style>
   
 </head>
@@ -87,13 +68,13 @@ font-style:Italic;
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="executiveHome.jsp">
+          <a class="nav-link" href="employeeHome.jsp">
             <i class="fa fa-home"></i>
             <span class="nav-link-text">Home</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="executiveEditProfile.jsp">
+          <a class="nav-link" href="charts.html">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Edit Profile</span>
           </a>
@@ -109,21 +90,19 @@ font-style:Italic;
               <a href="executiveAddTicket.jsp">Add Ticket</a>
             </li>
             <li>
-              <a href="executiveEditTicket.jsp">Edit Ticket</a>
+              <a href="exeEditTicket.jsp">Edit Ticket</a>
             </li>
 			<li>
-              <a href="executiveViewTickets.jsp">View Tickets</a>
+              <a href="cards.html">View Tickets</a>
             </li>
           </ul>
         </li>
-        <%Registration u=(Registration)session.getAttribute("login"); %>
-<%if((u.getType().equals("quality analyst"))||(u.getType().equals("executive quality analyst"))) {%>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages" style="display:none">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Test Management</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages" >
+          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
                                     <a href="#">Prepare Test Report</a>
                                 </li>
@@ -142,35 +121,9 @@ font-style:Italic;
                                 </li>
           </ul>
         </li>
-        <%}else{ %>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages" >
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Test Management</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages" >
-            <li>
-                                    <a href="#">Prepare Test Report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Prepare Test Data</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#">Prepare Bug Report</a>
-                                </li>
-                                <li>
-                                    <a href="#"> View Ticket Report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Modify Ticket Report</a>
-                                </li>
-          </ul>
-        </li>
-        <%} %>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="notifications.jsp">
+          <a class="nav-link" href="#">
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Notifications</span>
           </a>
@@ -184,32 +137,13 @@ font-style:Italic;
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-       <li class="">
-		<div class="container">
-    <div class="dropdown">
-                <%try {
-                	Connection con=Connections.getUrl();
-        PreparedStatement ps = con.prepareStatement("select * from registration where username=?");
-        ps.setString(1,u.getUsername());
-        ResultSet rs = ps.executeQuery();
-       
-        while ( rs.next()) { %>
-                <button id="button1"  type="button" data-toggle="dropdown"><img width='50' height='50' src=displayphoto?id=<%=rs.getString("username")%> alt="avatar" style="width: 50px">
-                  </button><font id="z" color=red size=5px><%=u.getName() %></font>
-                  <ul class="dropdown-menu">
-            <center><li><a href="login.jsp"><button class="btn btn-info">Log Out</button></a></li></center>
-            
-        </ul>
         
-        <% }
-
-        con.close();
-    }
-    catch(Exception ex) {
-ex.printStackTrace();
-    } %> 
-        </div></div>                 
-		</li>
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -231,50 +165,109 @@ ex.printStackTrace();
                         <div class="panel-body" >
                             <div class="row" >
                                 <div class="col-lg-12" >
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <b><label>Ticket Id</label></b>
-                                            <input class="form-control" type="text" name="ticketid" placeholder="Generates Automatically">
-                                        </div>
+                                    <form action="exicuteaddservlet" method="post">
+                                    <%     Class.forName("oracle.jdbc.driver.OracleDriver");
+Connection conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ttm","ttm");
+PreparedStatement pstmt = conn.prepareStatement("select * from extckt where ticketid=(select MAX(ticketid) from extckt)");
+ResultSet rs = pstmt.executeQuery();
+String s;
+if(rs.next()){
+s=rs.getString("ticketid");	
+int n1=s.length();
+//System.out.println(s.substring(3));
+int r=Integer.parseInt(s.substring(4)) + 1;
+ String s2="TCI-00"+r;
+ //System.out.println(s2);
+ //System.out.println(s2.length());
+ int n2=s2.length();
+ int n3=n1+1;
+
+if(n1==n2){
+	
+	 %>
+<div class="form-group">
+                                            <b><label>Ticket-Id</label></b>
+				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s2%>>
+				</div>
+
+			
+		<%
+  } 
+
+else if(n3==n2){
+	int r1=Integer.parseInt(s.substring(4)) + 1;
+	 String s3="TCI-0"+r1;
+	// System.out.println(s3);
+	 %>
+<div class="form-group">
+                                            <b><label>Ticket-Id</label></b>
+				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s3%>>
+				</div>
+	 <% 
+}else{
+	int r2=Integer.parseInt(s.substring(4)) + 1;
+	 String s4="TCI-"+r2;
+	 //System.out.println(s4);
+	 %>
+	 	<div class="form-group">
+                                            <b><label>Ticket-Id</label></b>
+				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s4%>>
+				</div>
+	 <% 
+	
+}
+
+}
+else{
+	 String id ="TCI-001";
+	
+	%>
+
+<div class="form-group">
+                                            <b><label>Ticket-Id</label></b>
+	<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=id%> readonly="readonly">
+	</div>
+<%} %>
+                                            
                                         <div class="form-group">
                                             <b><label>Ticket Description</label></b>
-                                            <input class="form-control" type="text" name="description" pattern="[A-Za-z]" placeholder="Ticket Description">
+                                            <input class="form-control" type="text" name="description" placeholder="Ticket Description">
                                         </div>
                                         <div class="form-group">
                                             <b><label>Project Name</label></b>
-                                            <input class="form-control" type="text" name="project" pattern="[A-Za-z]" placeholder="Project Name">
+                                            <input class="form-control" type="text" name="project" placeholder="Project Name">
                                         </div>
 										<div class="form-group">
                                            <b> <label>Module Name</label></b>
-                                            <input class="form-control" type="text" name="module" pattern="[A-Za-z]" placeholder="Module Nmae">
+                                            <input class="form-control" type="text" name="module" placeholder="Module Nmae">
                                         </div>
 										<div class="form-group">
                                             <b><label>Requirement</label></b>
-                                            <input class="form-control" type="text" name="requirement" pattern="[A-Za-z]" placeholder="Requirement Nmae">
+                                            <input class="form-control" type="text" name="requirement" placeholder="Requirement Nmae">
                                         </div>
 										<div class="form-group">
                                             <b><label>Assigned to </label></b>
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control" name="Assignedto">
+                                                <option>ganesh</option>
+                                                <option>anup</option>
+                                                <option>kranthi</option>
+                                                <option>karem</option>
+                                                <option>sanjay</option>
                                             </select>
                                         </div>
 										<div class="form-group">
                                             <b><label>Assigned by</label></b>
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control" name="Assignedby">
+                                                <option>sanjay</option>
+                                                <option>anup</option>
+                                                <option>ganesh</option>
+                                                <option>karem</option>
+                                                <option>kranthi</option>
                                             </select>
                                         </div>
 										<div class="form-group">
                                             <b><label>Date of Issue</label></b>
-                                            <input class="form-control" type="date" name="doi" placeholder="Date of Issue">
+                                            <input class="form-control" type="date" name="Dateissue" placeholder="Date of Issue">
                                         </div>
                                         <br><button type="submit" class="btn btn-info">Add Ticket</button>
                                         
@@ -328,5 +321,49 @@ ex.printStackTrace();
     <script src="js/sb-admin.min.js"></script>
   </div>
 </body>
+<script type="text/javascript">
+
+    
+    $(window).load(function(){
+		$(document).ready(function() {
+			
+    });
+			var template = $('#template'),
+				id = 0;
+			
+			$("#add-line").click(function() {
+				if(!template.is(':visible'))
+				{
+					template.show();
+					return;
+				}
+				var row = template.clone();
+				template.find("input:text").val("");
+				row.attr('id', 'row_' + (id++));
+				template.before(row);
+                var i=1;
+
+    $('.form_id').each(function(){
+    	 $(this).text('Tc-00'+ i);
+        i++;
+			});
+			
+			$('.form-fields').on('click', '.remove', function(){
+				var row = $(this).closest('tr');
+				if(row.attr('id') == 'template')
+				{
+					row.hide();
+				}
+				else
+				{
+					row.remove();
+                   
+				}
+			});
+		});
+		});
+    
+    
+    </script>
 
 </html>

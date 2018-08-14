@@ -128,7 +128,7 @@ font-size:15px;
               <a href="employeeAddTicket.jsp">Add Ticket</a>
             </li>
             <li>
-              <a href="employeeEditTicket.jsp">Edit Ticket</a>
+              <a href="empEditTicket.jsp">Edit Ticket</a>
             </li>
 			<li>
               <a href="employeeViewTickets.jsp">View Tickets</a>

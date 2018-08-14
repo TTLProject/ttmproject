@@ -1,15 +1,10 @@
-
-<!-- author-venkatesh
-description-add ticket for executive and employee
-date-13/08/2018 -->
-
 <!DOCTYPE html>
 <%@page import="utily.Connections"%>
 <%@page import="userbean.Registration"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
 <html lang="en">
 
 <head>
@@ -18,7 +13,7 @@ date-13/08/2018 -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>EMPLOYEE ADD TICKET</title>
+  <title>EMPLOYEE EDIT</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -26,7 +21,7 @@ date-13/08/2018 -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <style>
-  img {
+   img {
   border-radius: 50%;
 }
 #button1 {border-radius: 50px; 
@@ -54,13 +49,13 @@ font-style:Italic;
    margin-bottom: 20px;
   }
   .panel-body{
-  padding: 15px
- 
+  
+ padding: 10px
   }
   .panel-default {
   border-color: #ddd;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .panel-default > .panel-heading {
 	padding-bottom: 20px;
@@ -82,11 +77,32 @@ p.small{
 font-variant: small-caps;
 font-size:30px;
 }
+.dot {
+    height: 10px;
+    width: 15px;
+    background-color: yellow;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot1 {
+    height: 10px;
+    width: 15px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot2 {
+    height: 10px;
+    width: 15px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
   </style>
   
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-light" id="page-top">
 <%Registration u=(Registration)session.getAttribute("login"); %>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -170,9 +186,9 @@ font-size:30px;
         
         
         <li class="nav-item">
-         <div class="container">
+        <div class="container">
     <div class="dropdown">
-    <%try {
+             <%try {
     	Connection con=Connections.getUrl();
         PreparedStatement ps = con.prepareStatement("select * from registration where username=?");
         ps.setString(1,u.getUsername());
@@ -193,7 +209,7 @@ font-size:30px;
     catch(Exception ex) {
 ex.printStackTrace();
     } %> 
-        </div></div>        
+        </div></div>
         </li>
       </ul>
     </div>
@@ -203,7 +219,7 @@ ex.printStackTrace();
       <!-- Breadcrumbs-->
       <center><div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Add Ticket</h1>
+                    <h1 class="page-header">Edit Tickets</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div></center>
@@ -211,140 +227,72 @@ ex.printStackTrace();
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Ticket Information
+                            <div style="text-align:left">
+  
+  <h5> All Tickets</h5>
+  
+</div>
                         </div>
+ 
                         <div class="panel-body" >
-                            <div class="row" >
-                                <div class="col-lg-12" >
-                                    <form action="employaddservlet" method="post">
-                                    <%     Class.forName("oracle.jdbc.driver.OracleDriver");
-Connection conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ttm","ttm");
-PreparedStatement pstmt = conn.prepareStatement("select * from tcket where ticketid=(select MAX(ticketid) from tcket)");
-ResultSet rs = pstmt.executeQuery();
-String s;
-if(rs.next()){
-s=rs.getString("ticketid");	
-int n1=s.length();
-//System.out.println(s.substring(3));
-int r=Integer.parseInt(s.substring(4)) + 1;
- String s2="TCI-00"+r;
- //System.out.println(s2);
- //System.out.println(s2.length());
- int n2=s2.length();
- int n3=n1+1;
-
-if(n1==n2){
+                            <div class="table-responsive">
+                                <table border=2 class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>T.Id</th>
+                                            <th>T.Description</th>
+                                            <th>P.Name</th>
+                                            <th>M.Name</th>
+											<th>R.Name</th>
+											<th>Assigned To</th>
+											<th>Assigned By</th>
+											<th>Date of Issue</th>
+											<th>Date of Complete</th>
+											<th>Status</th>
+											<th>TO DO'S</th>
+                                        </tr>
+                                    </thead>
+                            
 	
-	 %>
-<div class="form-group">
-                                            <b><label>Ticket-Id</label></b>
-				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s2%>>
-				</div>
+                                    <tbody>
+                                    <%
+Class.forName("oracle.jdbc.driver.OracleDriver");
+Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ttm", "ttm");
+PreparedStatement pst=con.prepareStatement("select * from tcket");
+ResultSet rs=pst.executeQuery();
+   while(rs.next()){
+%>
 
-			
-		<%
-  } 
-
-else if(n3==n2){
-	int r1=Integer.parseInt(s.substring(4)) + 1;
-	 String s3="TCI-0"+r1;
-	// System.out.println(s3);
-	 %>
-<div class="form-group">
-                                            <b><label>Ticket-Id</label></b>
-				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s3%>>
-				</div>
-	 <% 
-}else{
-	int r2=Integer.parseInt(s.substring(4)) + 1;
-	 String s4="TCI-"+r2;
-	 //System.out.println(s4);
-	 %>
-	 	<div class="form-group">
-                                            <b><label>Ticket-Id</label></b>
-				<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=s4%>>
-				</div>
-	 <% 
-	
-}
-
-}
-else{
-	 String id ="TCI-001";
-	
-	%>
-
-<div class="form-group">
-                                            <b><label>Ticket-Id</label></b>
-	<input class="form-control" type="text" name="ticketid" placeholder=""  required="" value=<%=id%> readonly="readonly">
-	</div>
-<%} %>
-                                            
-                                        <div class="form-group">
-                                            <b><label>Ticket Description</label></b>
-                                            <input class="form-control" type="text" name="description" placeholder="Ticket Description">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label>Project Name</label></b>
-                                            <input class="form-control" type="text" name="project" placeholder="Project Name">
-                                        </div>
-										<div class="form-group">
-                                           <b> <label>Module Name</label></b>
-                                            <input class="form-control" type="text" name="module" placeholder="Module Nmae">
-                                        </div>
-										<div class="form-group">
-                                            <b><label>Requirement</label></b>
-                                            <input class="form-control" type="text" name="requirement" placeholder="Requirement Nmae">
-                                        </div>
-										<div class="form-group">
-                                            <b><label>Assigned to </label></b>
-                                            <select class="form-control" name="Assignedto">
-                                        <%
+                        
+                                        <tr bgcolor="">
+                                            <td><%=rs.getString(1)%></td>
+                                            <td><%=rs.getString(2)%></td>
+                                            <td><%=rs.getString(3)%></td>
+                                            <td><%=rs.getString(4)%></td>
+											<td><%=rs.getString(5)%></td>
+											<td><%=rs.getString(6)%></td>
+											<td><%=rs.getString(7)%></td>
+											<td><%=rs.getString(8)%></td>
+											<td><%=rs.getString(9)%></td>
+											<td><%=rs.getString(10)%></td>
+											<td>
+											
+											<a href="employeeEditTicket.jsp?ticket=<%=rs.getString(1)%>"><button  class="btn btn-info">Edit</button></a></td>
+                                        </tr>
+                                     
                                         
-                                            Class.forName("oracle.jdbc.driver.OracleDriver");
-                                            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ttm", "ttm");
-                                            PreparedStatement pst=con.prepareStatement("select * from registration ");
-                                            
-                                            ResultSet ds=pst.executeQuery();
-                                               while(ds.next()){
-                                            %>
-                                          
-                                                <option><%=ds.getString(8)%></option>
-                                                <%} %>
-                                            </select>
-                                            
-                                        </div>
-                                        
-										<div class="form-group">
-                                            <b><label>Assigned by</label></b>
-                                            <select class="form-control" name="Assignedby">
-                                             <%
-                                        
-                                            Class.forName("oracle.jdbc.driver.OracleDriver");
-                                            Connection cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ttm", "ttm");
-                                            PreparedStatement pstm=cn.prepareStatement("select * from registration ");
-                                            
-                                            ResultSet ns=pstm.executeQuery();
-                                               while(ns.next()){
-                                            %>
-                                                <option><%=ns.getString(8)%></option>
-                                             <%} %>
-                                            </select>
-                                        </div>
-										<div class="form-group">
-                                            <b><label>Date of Issue</label></b>
-                                            <input class="form-control" type="date" name="Dateissue" placeholder="Date of Issue">
-                                        </div>
-                                        <br><button type="submit" class="btn btn-info">Add Ticket</button>
-                                        
-                                    </form><br>
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
-                                
-                                <!-- /.col-lg-6 (nested) -->
+										
+                                    </tbody>
+                                    <%
+                        } %>
+                                </table>
+                     
+                           
                             </div>
+                            
                             <!-- /.row (nested) -->
                         </div>
+                        
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -387,49 +335,5 @@ else{
     <script src="js/sb-admin.min.js"></script>
   </div>
 </body>
-<script type="text/javascript">
-
-    
-    $(window).load(function(){
-		$(document).ready(function() {
-			
-    });
-			var template = $('#template'),
-				id = 0;
-			
-			$("#add-line").click(function() {
-				if(!template.is(':visible'))
-				{
-					template.show();
-					return;
-				}
-				var row = template.clone();
-				template.find("input:text").val("");
-				row.attr('id', 'row_' + (id++));
-				template.before(row);
-                var i=1;
-
-    $('.form_id').each(function(){
-    	 $(this).text('Tc-00'+ i);
-        i++;
-			});
-			
-			$('.form-fields').on('click', '.remove', function(){
-				var row = $(this).closest('tr');
-				if(row.attr('id') == 'template')
-				{
-					row.hide();
-				}
-				else
-				{
-					row.remove();
-                   
-				}
-			});
-		});
-		});
-    
-    
-    </script>
 
 </html>

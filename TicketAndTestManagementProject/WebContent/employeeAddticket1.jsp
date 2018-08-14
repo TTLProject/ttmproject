@@ -1,10 +1,4 @@
-
-<!-- author-venkatesh
-description-add ticket for executive and employee
-date-13/08/2018 -->
-
 <!DOCTYPE html>
-<%@page import="utily.Connections"%>
 <%@page import="userbean.Registration"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -26,7 +20,7 @@ date-13/08/2018 -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <style>
-  img {
+   img {
   border-radius: 50%;
 }
 #button1 {border-radius: 50px; 
@@ -87,7 +81,7 @@ font-size:30px;
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-<%Registration u=(Registration)session.getAttribute("login"); %>
+<%Registration u=(Registration)session.getAttribute("login");%>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <h2 ><p class="small" style="color:red;">Ticket and Test Management</p></h2>
@@ -170,30 +164,15 @@ font-size:30px;
         
         
         <li class="nav-item">
-         <div class="container">
+          <div class="container">
     <div class="dropdown">
-    <%try {
-    	Connection con=Connections.getUrl();
-        PreparedStatement ps = con.prepareStatement("select * from registration where username=?");
-        ps.setString(1,u.getUsername());
-        ResultSet rs = ps.executeQuery();
-       
-        while ( rs.next()) { %>
-                <button id="button1"  type="button" data-toggle="dropdown"><img width='50' height='50' src=displayphoto?id=<%=rs.getString("username")%> alt="avatar" style="width: 50px">
+                <button id="button1"  type="button" data-toggle="dropdown"><img src="images/img.jpg" alt="avatar" style="width: 50px">
                   </button><font id="z" color=red size=5px><%=u.getName() %></font>
                   <ul class="dropdown-menu">
             <center><li><a href="login.jsp"><button class="btn btn-info">Log Out</button></a></li></center>
             
-        </ul>
-        
-        <% }
-
-        con.close();
-    }
-    catch(Exception ex) {
-ex.printStackTrace();
-    } %> 
-        </div></div>        
+        </ul> 
+        </div></div>     
         </li>
       </ul>
     </div>
@@ -205,6 +184,7 @@ ex.printStackTrace();
                 <div class="col-lg-12">
                     <h1 class="page-header">Add Ticket</h1>
                 </div>
+                <h3 ><p class="small" style="color:red;">Ticket added successfully</p></h3>
                 <!-- /.col-lg-12 -->
             </div></center>
       <div class="row" >
@@ -299,36 +279,21 @@ else{
 										<div class="form-group">
                                             <b><label>Assigned to </label></b>
                                             <select class="form-control" name="Assignedto">
-                                        <%
-                                        
-                                            Class.forName("oracle.jdbc.driver.OracleDriver");
-                                            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ttm", "ttm");
-                                            PreparedStatement pst=con.prepareStatement("select * from registration ");
-                                            
-                                            ResultSet ds=pst.executeQuery();
-                                               while(ds.next()){
-                                            %>
-                                          
-                                                <option><%=ds.getString(8)%></option>
-                                                <%} %>
+                                                <option>ganesh</option>
+                                                <option>anup</option>
+                                                <option>kranthi</option>
+                                                <option>karem</option>
+                                                <option>sanjay</option>
                                             </select>
-                                            
                                         </div>
-                                        
 										<div class="form-group">
                                             <b><label>Assigned by</label></b>
                                             <select class="form-control" name="Assignedby">
-                                             <%
-                                        
-                                            Class.forName("oracle.jdbc.driver.OracleDriver");
-                                            Connection cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ttm", "ttm");
-                                            PreparedStatement pstm=cn.prepareStatement("select * from registration ");
-                                            
-                                            ResultSet ns=pstm.executeQuery();
-                                               while(ns.next()){
-                                            %>
-                                                <option><%=ns.getString(8)%></option>
-                                             <%} %>
+                                                <option>sanjay</option>
+                                                <option>anup</option>
+                                                <option>ganesh</option>
+                                                <option>karem</option>
+                                                <option>kranthi</option>
                                             </select>
                                         </div>
 										<div class="form-group">
